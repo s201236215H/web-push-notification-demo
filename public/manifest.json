@@ -1,0 +1,6 @@
+{
+  "name": "test-app",
+  "short_name": "Push Demo",
+  "display": "standalone",
+  "gcm_sender_id": "869025480890"
+}
