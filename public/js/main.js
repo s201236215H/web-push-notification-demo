@@ -1,10 +1,12 @@
 var isPushEnabled = false; // Global var for checking permission
+var mSubscription;
 
 var API_KEY = 'AIzaSyDbXPaANyJa10pVXYRIOqi2_67XziLeS9E';
 
 window.addEventListener('load', function() {
   var pushButton = document.querySelector('.js-push-button');
   var sendBtn = document.querySelector('.js-send-notification');
+  var sendBtnToServer = document.querySelector('.js-send-notification-delegate-server');
 
   pushButton.addEventListener('click', function() {
     if(isPushEnabled) {
@@ -29,12 +31,22 @@ window.addEventListener('load', function() {
     })
 
     fetch(request).then(function(response) {
-      console.log('Response: ' + response);
+      console.log('Response from push Server: ' + response);
     }).catch(function(err) {
       console.error(err);
     })
   });
-
+  sendBtnToServer.addEventListener('click', function() {
+    console.log('we are sending the subscription ', JSON.stringify(mSubscription));
+    fetch('/send',{
+      method: 'POST',
+      body: JSON.stringify(mSubscription)
+    }).then(function(response) {
+      console.log('Response from web server: ',response);
+    }).catch(function(error) {
+      console.error(error);
+    })
+  })
 
 
 
@@ -69,6 +81,7 @@ function initialiseState() {
     serviceWorkerRegistration.pushManager.getSubscription()
     .then(function(subscription) {
       var pushButton = document.querySelector('.js-push-button');
+      mSubscription = subscription;
       pushButton.disabled = false;
 
       if(!subscription) {
