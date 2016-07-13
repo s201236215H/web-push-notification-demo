@@ -6,9 +6,10 @@ var webpush = require('web-push-encryption');
 /* Delegate push send. */
 router.post('/', function(req, res) {
   console.log('we get the push request');
-  console.log(req);
+  console.log(req.body);
   //var subscription = req.body.toJSON();
-  webpush.send('This push sent from web server', subscription);
+  webpush.sendWebPush('This push sent from web server', subscription);
+  res.send('done!');
 });
 
 module.exports = router;
