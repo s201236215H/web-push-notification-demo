@@ -40,8 +40,8 @@ window.addEventListener('load', function() {
     console.log('we are sending the subscription ', JSON.stringify(mSubscription));
     fetch('/send',{
       method: 'POST',
-      header: {'Content-Type': 'application/json'},
-      body: JSON.stringify(mSubscription)
+      //header: {'Content-Type': 'application/json'},
+      body: "Hello"
     }).then(function(response) {
       console.log('Response from web server: ',response);
     }).catch(function(error) {
