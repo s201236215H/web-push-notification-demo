@@ -1,7 +1,11 @@
 var isPushEnabled = false; // Global var for checking permission
 
+var API_KEY = 'AIzaSyDbXPaANyJa10pVXYRIOqi2_67XziLeS9E';
+
 window.addEventListener('load', function() {
   var pushButton = document.querySelector('.js-push-button');
+  var sendBtn = document.querySelector('.js-send-notification');
+
   pushButton.addEventListener('click', function() {
     if(isPushEnabled) {
       unsubscribe();
@@ -9,6 +13,30 @@ window.addEventListener('load', function() {
       subscribe();
     }
   });
+
+  sendBtn.addEventListener('click', function() {
+    var headers = new Headers();
+    headers.append('Authorization', 'key=' + API_KEY);
+    headers.append('Content-Type', 'application/json');
+
+    var data = {
+      "to": "fCMp_U0hFlc:APA91bEgWWGJBydRuEERkQAFKS72skOboFng55-eEHdRHxwHwSImUaGgSePIIs2lcpSc4Xv3yX2M_ZgzQJrvuFWL-1Z-slUnd13X7l9ldQlFvsnRXq0PI5LurZektAW57TXv1V0g1Hsl"
+    }
+    var request = new Request('https://android.googleapis.com/gcm/send', {
+      headers: headers,
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+
+    fetch(request).then(function(response) {
+      console.log('Response: ' + response);
+    }).catch(function(err) {
+      console.error(err);
+    })
+  });
+
+
+
 
   // Check the support of service worker and then load the serviceWorker in hte background process(register)
   if ('serviceWorker' in navigator) {

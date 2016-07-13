@@ -16,6 +16,12 @@ self.addEventListener('push', function(event) {
     }, ]
   }
 
+  if (event.data) {
+    const data = event.data.text();
+    notificationTitle = 'Received Payload';
+    options.body = `Push data: '${dataText}'`;
+  }
+
   event.waitUntil(
     self.registration.showNotification(title, options)
   );
