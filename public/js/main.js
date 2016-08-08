@@ -1,5 +1,6 @@
 var isPushEnabled = false; // Global var for checking permission
 var mSubscription;
+var registrationId;
 
 var API_KEY = 'AIzaSyDbXPaANyJa10pVXYRIOqi2_67XziLeS9E';
 
@@ -16,13 +17,53 @@ window.addEventListener('load', function() {
     }
   });
 
+  setInterval(function() {
+    var xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = function() {
+      if(xhttp.readyState == 4 && xhttp.status == 200) {
+      var userList = JSON.parse(xhttp.responseText)
+      var html = ""
+      for (var key in userList) {
+       html += "<tr>"
+       html += "<td>" + key + "</td>"
+       html += "<td><button type='submit' class='sd-push' id=" + JSON.stringify(key) + "' >send</button></td>"
+       html += "</tr>"
+      }
+      if(html!=null)
+        document.querySelector("#user-list").innerHTML = html
+        document.querySelector('.sd-push').addEventListener('click', function() {
+
+          var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+
+                }
+
+            }
+            xmlHttp.open("POST", "/send/ID", true); // true for asynchronous
+            xmlHttp.send(key);
+
+        })
+    }
+  };
+  xhttp.open("GET", "UserList.txt", true)
+  xhttp.send();
+}, 5000)
+
+
+
+
+
+
+
   sendBtn.addEventListener('click', function() {
     var headers = new Headers();
     headers.append('Authorization', 'key=' + API_KEY);
     headers.append('Content-Type', 'application/json');
 
     var data = {
-      "to": "fCMp_U0hFlc:APA91bEgWWGJBydRuEERkQAFKS72skOboFng55-eEHdRHxwHwSImUaGgSePIIs2lcpSc4Xv3yX2M_ZgzQJrvuFWL-1Z-slUnd13X7l9ldQlFvsnRXq0PI5LurZektAW57TXv1V0g1Hsl"
+      "to": mSubscription.registrationId
+
     }
     var request = new Request('https://android.googleapis.com/gcm/send', {
       headers: headers,
@@ -37,11 +78,10 @@ window.addEventListener('load', function() {
     })
   });
   sendBtnToServer.addEventListener('click', function() {
-    console.log('we are sending the subscription ', JSON.stringify(mSubscription));
+    console.log('we are sending the subscription to server', JSON.stringify(mSubscription));
     fetch('/send',{
       method: 'POST',
-      //header: {'Content-Type': 'application/json'},
-      body: "Hello"
+      body: JSON.stringify(mSubscription)
     }).then(function(response) {
       console.log('Response from web server: ',response);
     }).catch(function(error) {
@@ -129,6 +169,7 @@ function subscribe() {
 //get the registrationId
 function sendSubscriptionToServer(subscription) {
   console.log(JSON.stringify(subscription));
+  mSubscription = subscription
   var endpoint = subscription.endpoint;
   if(endpoint.startsWith('https://android.googleapis.com/gcm/send')) {
     endpointParts = endpoint.split('/')
