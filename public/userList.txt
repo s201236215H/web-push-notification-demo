@@ -1,1 +1,1 @@
-["{\"endpoint\":\"https://android.googleapis.com/gcm/send/egRyHMT6p2k:APA91bEL3NchvKSX_Ww3wLnbqm6vZv_CmktH9K2jn9ZAJKgs1OVMgIgjZQIs7TsbeNgoUhS3HMIkFFDNESrTSwIxZj-QKuwshearzAxPU2fojrarhi5_2uzL7EcLx1fOZxRcFNCY1f0z\",\"keys\":{\"p256dh\":\"BIiopMgNkTocgiYiBv2rV-DzqNvuc7wui8L3QvinxvzdRmbKBB-Sl-XJrOtK-B7IDmAdDewaIGBW8BImxt3vRjA=\",\"auth\":\"3_22DKO4j0ia6qe8H79atQ==\"}}"]
+[]

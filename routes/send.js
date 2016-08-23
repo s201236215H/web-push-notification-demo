@@ -49,7 +49,9 @@ router.post('/',bodyParser.text(), function(req, res) {
       throw err
       console.log(data);
     var userList = JSON.parse(data)
-    userList.push(JSON.stringify(subscription))
+    if (userList.find(function(item){return item == JSON.stringify(userList)}) == null) {
+      userList.push(JSON.stringify(subscription))
+    }
     console.log("userList string: " + JSON.stringify(userList));
     console.log("userList json: " + userList);
     fs.writeFile(filePath,JSON.stringify(userList), function(err) {
