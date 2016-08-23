@@ -5,6 +5,10 @@ This is a simple push notification that can currently run on chrome only with no
 ```2. npm install; npm install gulp -g```  
 ```3. gulp develop```
 
+## Finished tasks
+- added payload in push notification
+- added individual admin panel which showing the user list 
+
 ## Ongoing tasks
-- run on php
-- add payload in push notification
+- add global push notification
+- delegate tasks to work queue(e.g. RabbitMQ, beanstalk)
