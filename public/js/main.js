@@ -31,7 +31,9 @@ window.addEventListener('load', function() {
       }
       if(html!=null)
         document.querySelector("#user-list").innerHTML = html
-        document.querySelector('.sd-push').addEventListener('click', function() {
+        var push_btn = document.querySelectorAll('.sd-push');
+        for (var i=0; i<push_btn.length;i++) {
+          push_btn[i].addEventListener('click', function() {
 
           var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() {
@@ -45,6 +47,8 @@ window.addEventListener('load', function() {
             xmlHttp.send(this.id);
 
         })
+        }
+        
     }
   };
   xhttp.open("GET", "UserList.txt", true)
