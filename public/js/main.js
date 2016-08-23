@@ -23,10 +23,10 @@ window.addEventListener('load', function() {
       if(xhttp.readyState == 4 && xhttp.status == 200) {
       var userList = JSON.parse(xhttp.responseText)
       var html = ""
-      for (var key in userList) {
+      for (var key = 0; key < userList.length; key++) {
        html += "<tr>"
-       html += "<td>" + key + "</td>"
-       html += "<td><button type='submit' class='sd-push' id=" + JSON.stringify(key) + "' >send</button></td>"
+       html += "<td>" + userList[key] + "</td>"
+       html += "<td><button type='submit' class='sd-push' id=" + "'" + userList[key] + "'" + "' >send</button></td>"
        html += "</tr>"
       }
       if(html!=null)
@@ -41,7 +41,8 @@ window.addEventListener('load', function() {
 
             }
             xmlHttp.open("POST", "/send/ID", true); // true for asynchronous
-            xmlHttp.send(key);
+            console.log("The message that going to send: " + this.id)
+            xmlHttp.send(this.id);
 
         })
     }
