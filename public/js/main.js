@@ -118,11 +118,13 @@ function initialiseState() {
     console.warn('Push messaging isn\'t supported');
     return;
   }
-
+  console.log("going to get subscritpion")
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+    console.log("Hello");
     serviceWorkerRegistration.pushManager.getSubscription()
     .then(function(subscription) {
       var pushButton = document.querySelector('.js-push-button');
+      console.log('subscription: ' + subscription)
       mSubscription = subscription;
       pushButton.disabled = false;
 
